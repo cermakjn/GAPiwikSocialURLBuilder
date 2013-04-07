@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Google Analytics & Piwik URL builder</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function () { 
+     			$('input#generate').click(function() {
+				var url = $('input#url').val();
+				var name = $('input#name').val();
+				var medium = $('input#medium').val();
+
+				var googleplus = url+'?pk_campaign=googleplus-'+name+'&utm_source=googleplus&utm_medium='+medium+'&utm_campaign='+name;
+				var twitter = url+'?pk_campaign=twitter-'+name+'&utm_source=twitter&utm_medium='+medium+'&utm_campaign='+name;
+				var facebook = url+'?pk_campaign=facebook-'+name+'&utm_source=facebook&utm_medium='+medium+'&utm_campaign='+name;
+
+				$('input#googleplus').val(googleplus);
+				$('input#twitter').val(twitter);
+				$('input#facebook').val(facebook);
+			});
+			$('a#googleplus-share').click(function() {
+				newWindow('https://plus.google.com/share?url='+$('input#googleplus').val());
+			}); 
+			$('a#twitter-share').click(function() {
+				newWindow('http://twitter.com/home?status='+$('input#twitter').val());
+			}); 
+			$('a#facebook-share').click(function() {
+				newWindow('https://www.facebook.com/sharer/sharer.php?u='+$('input#facebook').val());
+			}); 
+			function newWindow(url) {
+				//replace & for URL transofrm
+				for(c = 0; c < 3; c++) {
+					url = url.replace("&", "%26");
+				}
+				var windowSize = "width=500,height=400,scrollbars=yes";
+				window.open(url, 'Share', windowSize);
+			}            
+		});
+	</script>
+	<style type="text/css">
+		label {
+		    display: block;
+		    float: left;
+		    width: 150px;
+		}
+		input {
+		    width: 450px;
+		    margin: 0;
+		    padding: 0;
+		}
+	</style>
+</head>
+<body>
+<h1>Google Analytics & Piwik social URL builder</h1>
+	<label for="url">URL </label><input type="text" id="url" /><br />
+	<label for="name">Campaign Name </label><input type="text" id="name" /><br />
+	<label for="medium">Campaign Medium (Google Analytics only) </label><input type="text" id="medium" /><br />
+	<input type="submit" id="generate" value="Generate" />
+<h2>Result</h2>
+	<label for="googleplus">Google+ </label><input type="text" id="googleplus" /> <a href="#" id="googleplus-share" title="Share link on Google+">share</a><br />
+	<label for="twitter">Twitter </label><input type="text" id="twitter" /> <a href="#" id="twitter-share" title="Share link on Twitter">share</a><br />
+	<label for="facebook">Facebook </label><input type="text" id="facebook" /> <a href="#" id="facebook-share" title="Share link on Facebook">share</a>
+</body>
+</html>
